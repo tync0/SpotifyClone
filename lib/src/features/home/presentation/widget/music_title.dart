@@ -32,13 +32,13 @@ class MusicViewTitle extends StatelessWidget {
               ),
             ],
           ),
-          Spacer(),
-          SvgPic(
+          const Spacer(),
+          const SvgPic(
             assetsName: SvgConst.hideSong,
             size: 26,
           ),
-          SizedBox(width: 35),
-          CustomIcon(
+          const SizedBox(width: 35),
+          const CustomIcon(
             iconData: Icons.favorite_border,
           ),
         ],

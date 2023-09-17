@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
-import 'package:spotify/src/features/home/presentation/provider/provider.dart';
+import 'package:spotify/src/features/home/presentation/provider/music_provider.dart';
 import 'package:spotify/src/features/home/presentation/widget/music_image.dart';
 import 'package:spotify/src/features/home/presentation/widget/music_title.dart';
 import 'package:spotify/src/shared/widget/custom_icon.dart';
+import 'package:spotify/src/utils/contants/text_style.dart';
 import '../widget/music_appbar.dart';
 import '../widget/music_footer_icon.dart';
 
@@ -18,27 +18,6 @@ class MusicView extends StatefulWidget {
 }
 
 class _MusicViewState extends State<MusicView> {
-  final AudioPlayer _player = AudioPlayer();
-  final double _sliderValue = 0;
-
-  // late final MusicManager _manager;
-  @override
-  void initState() {
-    setUrl();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _player.stop();
-    _player.dispose();
-    super.dispose();
-  }
-
-  void setUrl() async {
-    await _player.setAsset('assets/la.lacon.mp3');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,13 +38,60 @@ class _MusicViewState extends State<MusicView> {
                 const SizedBox(height: 57),
                 const MusicViewTitle(),
                 const SizedBox(height: 10),
-                Slider(
-                  onChanged: (value) {},
-                  value: _sliderValue,
-                  min: 0,
-                  max: 3,
-                  activeColor: Colors.white,
-                  inactiveColor: Colors.grey[700],
+                Consumer<MusicManager>(
+                  builder: (context, value, child) {
+                    Duration? current = value.current;
+                    Duration? total = value.total;
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SliderTheme(
+                          data: const SliderThemeData(
+                            trackHeight: 4,
+                            trackShape: RectangularSliderTrackShape(),
+                            thumbShape: RoundSliderThumbShape(
+                              enabledThumbRadius: 5,
+                            ),
+                          ),
+                          child: Slider(
+                            onChanged: (valuee) async {
+                              Duration position = Duration(
+                                seconds: valuee.toInt(),
+                              );
+                              value.musicSeek(position);
+                            },
+                            value: current!.inSeconds.toDouble(),
+                            min: 0,
+                            max: total!.inSeconds.toDouble(),
+                            activeColor: Colors.white,
+                            inactiveColor: Colors.grey[700],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Row(
+                            children: [
+                              Text(
+                                formatTime(current),
+                                style:
+                                    ConstantTextStyle.smallTextStyle!.copyWith(
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const Spacer(),
+                              Text(
+                                formatTime(total),
+                                style:
+                                    ConstantTextStyle.smallTextStyle!.copyWith(
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    );
+                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -82,19 +108,18 @@ class _MusicViewState extends State<MusicView> {
                         color: Colors.white,
                         shape: BoxShape.circle,
                       ),
-                      child: Consumer<Button>(
+                      child: Consumer<MusicManager>(
                         builder: (context, value, child) {
-                          return InkWell(
-                            splashColor: Colors.transparent,
+                          return GestureDetector(
+                            //update state
                             onTap: () async {
                               if (value.playing) {
                                 value.changeState();
-                                await _player.pause();
+                                value.pauseMusic();
                               } else {
                                 value.changeState();
-                                await _player.play();
+                                value.playMusic();
                               }
-                              // Update the playing state
                             },
                             child: value.playing
                                 ? const CustomIcon(
@@ -125,4 +150,14 @@ class _MusicViewState extends State<MusicView> {
       ),
     );
   }
+}
+
+String formatTime(Duration duration) {
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
+  String minutes = twoDigits(duration.inMinutes.remainder(60));
+  String seconds = twoDigits(duration.inSeconds.remainder(60));
+  return [
+    minutes,
+    seconds,
+  ].join(':');
 }

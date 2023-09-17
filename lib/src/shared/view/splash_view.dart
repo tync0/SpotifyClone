@@ -28,7 +28,7 @@ class _SplashViewState extends State<SplashView> {
           height: context.mediaQueryHeight / 4,
           child: SvgPicture.asset(
             'assets/svg/spotify_logo.svg',
-            colorFilter: ColorFilter.mode(
+            colorFilter: const ColorFilter.mode(
               AppColor.primaryColor,
               BlendMode.srcIn,
             ),
