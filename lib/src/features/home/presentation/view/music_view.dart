@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:spotify/src/features/home/presentation/provider/music_manager.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:provider/provider.dart';
+import 'package:spotify/src/features/home/presentation/provider/provider.dart';
 import 'package:spotify/src/features/home/presentation/widget/music_image.dart';
 import 'package:spotify/src/features/home/presentation/widget/music_title.dart';
 import 'package:spotify/src/shared/widget/custom_icon.dart';
@@ -16,11 +18,25 @@ class MusicView extends StatefulWidget {
 }
 
 class _MusicViewState extends State<MusicView> {
-  late final MusicManager _manager;
+  final AudioPlayer _player = AudioPlayer();
+  final double _sliderValue = 0;
+
+  // late final MusicManager _manager;
   @override
   void initState() {
-    _manager = MusicManager();
+    setUrl();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _player.stop();
+    _player.dispose();
+    super.dispose();
+  }
+
+  void setUrl() async {
+    await _player.setAsset('assets/la.lacon.mp3');
   }
 
   @override
@@ -43,20 +59,14 @@ class _MusicViewState extends State<MusicView> {
                 const SizedBox(height: 57),
                 const MusicViewTitle(),
                 const SizedBox(height: 10),
-                // ValueListenableBuilder<ProgressBarState>(
-                //   valueListenable: _manager.progressNotifier,
-                //   builder: (context, value, child) => Slider(
-                //     min: 0, //double.parse(value.buffered.toString()),
-                //     max: double.parse(value.total.toString()),
-                //     value: double.parse(value.current.toString()),
-                //     onChanged: (value) {
-                //       final position = Duration(seconds: value.toInt());
-                //       _manager.seek(position);
-                //     },
-                //     activeColor: Colors.white,
-                //     inactiveColor: Colors.grey[700],
-                //   ),
-                // ),
+                Slider(
+                  onChanged: (value) {},
+                  value: _sliderValue,
+                  min: 0,
+                  max: 3,
+                  activeColor: Colors.white,
+                  inactiveColor: Colors.grey[700],
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -65,30 +75,38 @@ class _MusicViewState extends State<MusicView> {
                       size: 48,
                     ),
                     const SizedBox(width: 20),
-                    ValueListenableBuilder<bool>(
-                      valueListenable: _manager.isPlaying,
-                      builder: (context, value, child) => Container(
-                        width: 65,
-                        height: 65,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: value == true
-                            ? InkWell(
-                                onTap: _manager.play,
-                                child: const CustomIcon(
-                                  iconData: Icons.pause,
-                                  color: Colors.black,
-                                ),
-                              )
-                            : InkWell(
-                                onTap: _manager.pause,
-                                child: const CustomIcon(
-                                  iconData: Icons.play_arrow,
-                                  color: Colors.black,
-                                ),
-                              ),
+                    Container(
+                      width: 65,
+                      height: 65,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Consumer<Button>(
+                        builder: (context, value, child) {
+                          return InkWell(
+                            splashColor: Colors.transparent,
+                            onTap: () async {
+                              if (value.playing) {
+                                value.changeState();
+                                await _player.pause();
+                              } else {
+                                value.changeState();
+                                await _player.play();
+                              }
+                              // Update the playing state
+                            },
+                            child: value.playing
+                                ? const CustomIcon(
+                                    iconData: Icons.pause,
+                                    color: Colors.black,
+                                  )
+                                : const CustomIcon(
+                                    iconData: Icons.play_arrow,
+                                    color: Colors.black,
+                                  ),
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(width: 20),

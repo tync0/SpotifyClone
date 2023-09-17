@@ -13,6 +13,10 @@ class MusicViewImage extends StatelessWidget {
         color: Colors.blueGrey,
         borderRadius: BorderRadius.circular(8),
       ),
+      child: Image.asset(
+        'assets/pop-smoke.jpeg',
+        fit: BoxFit.fill,
+      ),
     );
   }
 }

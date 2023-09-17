@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:just_audio/just_audio.dart';
 
 class MusicManager {
   static const url =
@@ -17,13 +17,11 @@ class MusicManager {
   }
   void _init() async {
     _audioPlayer = AudioPlayer();
-    _audioPlayer.onPlayerStateChanged.listen(
-      (event) {
-        isPlaying.value = event == PlayerState.playing;
-      },
+    _audioPlayer.playerStateStream.listen(
+      (event) {},
     );
     //control position
-    _audioPlayer.onPositionChanged.listen(
+    _audioPlayer.positionStream.listen(
       (position) {
         final oldState = progressNotifier.value;
         progressNotifier.value = ProgressBarState(
@@ -33,19 +31,19 @@ class MusicManager {
       },
     );
     //control duration
-    _audioPlayer.onDurationChanged.listen(
+    _audioPlayer.durationStream.listen(
       (totalDuration) {
         final oldState = progressNotifier.value;
         progressNotifier.value = ProgressBarState(
           current: oldState.current,
-          total: totalDuration,
+          total: oldState.total,
         );
       },
     );
   }
 
   void play() {
-    _audioPlayer.play(UrlSource(url));
+    _audioPlayer.play();
   }
 
   void pause() {

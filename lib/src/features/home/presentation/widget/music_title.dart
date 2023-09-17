@@ -22,12 +22,12 @@ class MusicViewTitle extends StatelessWidget {
             children: [
               const SizedBox(height: 10),
               Text(
-                'Kaybettik',
+                'Dior',
                 style: ConstantTextStyle.largeTextStyle!.copyWith(fontSize: 22),
               ),
               const SizedBox(height: 10),
               Text(
-                'Lia Shine',
+                'Pop Smoke',
                 style: ConstantTextStyle.smallTextStyle,
               ),
             ],
