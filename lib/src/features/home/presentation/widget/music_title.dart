@@ -25,21 +25,24 @@ class MusicViewTitle extends StatelessWidget {
                 'Dior',
                 style: ConstantTextStyle.largeTextStyle!.copyWith(fontSize: 22),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
               Text(
                 'Pop Smoke',
-                style: ConstantTextStyle.smallTextStyle,
+                style: ConstantTextStyle.smallTextStyle!.copyWith(
+                  color: Colors.grey[300],
+                ),
               ),
             ],
           ),
           const Spacer(),
           const SvgPic(
             assetsName: SvgConst.hideSong,
-            size: 26,
+            size: 28,
           ),
           const SizedBox(width: 35),
           const CustomIcon(
             iconData: Icons.favorite_border,
+            size: 32,
           ),
         ],
       ),
