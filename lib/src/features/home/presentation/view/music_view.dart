@@ -6,7 +6,6 @@ import 'package:spotify/src/features/home/presentation/widget/music_image.dart';
 import 'package:spotify/src/features/home/presentation/widget/music_title.dart';
 import 'package:spotify/src/shared/widget/custom_icon.dart';
 import 'package:spotify/src/utils/contants/text_style.dart';
-import 'package:spotify/src/utils/extension/mediaquery_extension.dart';
 import '../widget/music_appbar.dart';
 import '../widget/music_footer_icon.dart';
 
@@ -26,7 +25,7 @@ class _MusicViewState extends State<MusicView> {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          stops: const [0.2, 0.4, 0.6, 0.9],
+          stops: const [0.2, 0.4, 0.7, 1],
           colors: [
             Colors.blueGrey.shade700,
             Colors.blueGrey.shade800,
