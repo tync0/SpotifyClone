@@ -1,8 +1,6 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:spotify/src/core/resource/data_state.dart';
+import 'package:spotify/src/core/storage/secure_storage.dart';
 import 'package:spotify/src/features/auth/data/datasource/auth_datasource.dart';
 import 'package:spotify/src/features/auth/data/model/user_model.dart';
 import 'package:spotify/src/features/auth/domain/entity/user_entity.dart';
@@ -10,7 +8,7 @@ import 'package:spotify/src/features/auth/domain/entity/user_entity.dart';
 import '../../domain/repository/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  AuthDatasource _authDatasource;
+  final AuthDatasource _authDatasource;
   AuthRepositoryImpl(this._authDatasource);
 
   @override
@@ -27,6 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       if (httpResponse.response.statusCode == 200) {
         final responseData = httpResponse.response.data;
+        await SecureStorage.saveToken(responseData['token']);
         return DataSuccess(
           httpResponse.data,
         );
@@ -62,6 +61,7 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       if (httpResponse.response.statusCode == 200) {
         final responseData = httpResponse.response.data;
+        await SecureStorage.saveToken(responseData['token']);
         return DataSuccess(
           httpResponse.data,
         );
