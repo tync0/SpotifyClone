@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'playlist_service.dart';
+part of 'main_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,12 +8,12 @@ part of 'playlist_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _PlaylistService implements PlaylistService {
-  _PlaylistService(
+class _MainService implements MainService {
+  _MainService(
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://spotifyapi-project.azurewebsites.net/api/v1';
+    baseUrl ??= 'https://spotifyapi-xb00.onrender.com/api/v1/';
   }
 
   final Dio _dio;
@@ -21,13 +21,13 @@ class _PlaylistService implements PlaylistService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<List<PlaylistModel>>> getPlaylistInitial() async {
+  Future<HttpResponse<PlaylistsModel>> getPlaylistInitial() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<HttpResponse<List<PlaylistModel>>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<PlaylistsModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -43,9 +43,7 @@ class _PlaylistService implements PlaylistService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
-        .map((dynamic i) => PlaylistModel.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = PlaylistsModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

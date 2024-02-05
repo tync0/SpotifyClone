@@ -21,9 +21,9 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
-          left: 18,
-          right: 18,
-          top: 73,
+          left: 15,
+          right: 15,
+          top: 35,
         ),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

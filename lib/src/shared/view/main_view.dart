@@ -26,12 +26,13 @@ class _MainViewState extends State<MainView> {
           LibraryRoute(),
         ],
         builder: (context, child) {
+          final tabsRouter = AutoTabsRouter.of(context);
           return Scaffold(
             body: SafeArea(
               child: child,
             ),
             bottomNavigationBar: Container(
-              height: context.dynamicHeight(0.09),
+              height: context.dynamicHeight(0.1),
               width: context.mediaQueryWidth,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
@@ -44,27 +45,34 @@ class _MainViewState extends State<MainView> {
                   ],
                 ),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 48),
-              child: const Row(
+              padding: const EdgeInsets.only(
+                left: 48,
+                right: 48,
+                top: 20,
+              ),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   BottomItem(
                     fieldName: 'Home',
                     svgPic: SvgConst.home,
-                    isActive: true,
+                    isActive: 0 == tabsRouter.activeIndex,
                     svgPicActive: SvgConst.homeFilled,
+                    onTap: () => tabsRouter.setActiveIndex(0),
                   ),
                   BottomItem(
                     fieldName: 'Search',
                     svgPic: SvgConst.search,
-                    isActive: true,
+                    isActive: 1 == tabsRouter.activeIndex,
                     svgPicActive: SvgConst.searchFilled,
+                    onTap: () => tabsRouter.setActiveIndex(1),
                   ),
                   BottomItem(
                     fieldName: 'Library',
                     svgPic: SvgConst.library,
-                    isActive: true,
+                    isActive: 2 == tabsRouter.activeIndex,
                     svgPicActive: SvgConst.libraryFilled,
+                    onTap: () => tabsRouter.setActiveIndex(2),
                   ),
                 ],
               ),
@@ -79,33 +87,40 @@ class _MainViewState extends State<MainView> {
 class BottomItem extends StatelessWidget {
   final String svgPic, svgPicActive, fieldName;
   final bool isActive;
+  final void Function()? onTap;
   const BottomItem({
     super.key,
     required this.fieldName,
     required this.svgPic,
     required this.svgPicActive,
     required this.isActive,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: SvgPic(
-            assetsName: isActive ? svgPicActive : svgPic,
-            size: 26,
+    return InkWell(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      onTap: onTap,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: SvgPic(
+              assetsName: isActive ? svgPicActive : svgPic,
+              size: 26,
+            ),
           ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          fieldName,
-          style: ConstantTextStyle.smallTextStyle!.copyWith(
-            color: Colors.white,
+          const SizedBox(height: 4),
+          Text(
+            fieldName,
+            style: ConstantTextStyle.smallTextStyle!.copyWith(
+              color: Colors.white,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
