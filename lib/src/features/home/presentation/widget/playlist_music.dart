@@ -11,7 +11,9 @@ class PlayListMusic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.router.pushNamed('/music'),
+      onTap: () async {
+        context.router.pushNamed('/music');
+      },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

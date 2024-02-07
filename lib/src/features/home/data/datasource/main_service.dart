@@ -3,8 +3,6 @@ import 'package:retrofit/retrofit.dart';
 import 'package:spotify/src/core/interceptor/token_interceptor.dart';
 import 'package:spotify/src/utils/contants/api.dart';
 
-import '../model/playlists_model.dart';
-
 part 'main_service.g.dart';
 
 @RestApi(baseUrl: ServiceConst.baseUrl)
@@ -17,5 +15,10 @@ abstract class MainService {
     return _MainService(dio);
   }
   @GET(ServiceConst.playlistEndPoint)
-  Future<HttpResponse<PlaylistsModel>> getPlaylistInitial();
+  Future<HttpResponse> getPlaylist();
+
+  @GET("${ServiceConst.playlistEndPoint}/{id}/")
+  Future<HttpResponse> getMusics(
+    @Path("id") int id,
+  );
 }

@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:spotify/src/utils/extension/mediaquery_extension.dart';
 
 class PlayListAppBar extends StatefulWidget {
   const PlayListAppBar({super.key});
@@ -42,11 +41,6 @@ class _PlayListAppBarState extends State<PlayListAppBar> {
           ),
         ),
         const SizedBox(width: 34),
-        Container(
-          color: Colors.blueGrey,
-          width: context.dynamicWidth(0.57),
-          height: context.dynamicHeight(0.27),
-        ),
       ],
     );
   }

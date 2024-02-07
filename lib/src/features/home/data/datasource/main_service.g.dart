@@ -13,7 +13,7 @@ class _MainService implements MainService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://spotifyapi-xb00.onrender.com/api/v1/';
+    baseUrl ??= 'https://spotifyapi-xb00.onrender.com/';
   }
 
   final Dio _dio;
@@ -21,20 +21,20 @@ class _MainService implements MainService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<PlaylistsModel>> getPlaylistInitial() async {
+  Future<HttpResponse<dynamic>> getPlaylist() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<PlaylistsModel>>(Options(
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'playlists/',
+              'api/v1/playlists/',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -43,7 +43,35 @@ class _MainService implements MainService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = PlaylistsModel.fromJson(_result.data!);
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<dynamic>> getMusics(int id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/playlists//${id}/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = _result.data;
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

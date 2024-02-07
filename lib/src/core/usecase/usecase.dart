@@ -1,7 +1,7 @@
-abstract class GetPlaylistInitialUseCase<T> {
+abstract class GetPlaylistUsecase<T> {
   Future<T> call();
 }
 
-abstract class GetMusicUseCase<T> {
+abstract class GetMusicUsecase<T> {
   Future<T> call(int id);
 }

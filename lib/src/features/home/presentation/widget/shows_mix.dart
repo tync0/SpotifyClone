@@ -15,7 +15,9 @@ class ShowsMix extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-            onTap: () => context.router.pushNamed('/playlist'),
+            onTap: () async {
+              context.router.pushNamed('/playlist');
+            },
             child: Container(
               width: context.dynamicWidth(0.4),
               height: context.dynamicHeight(0.19),

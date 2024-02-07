@@ -10,7 +10,7 @@ class MusicManager extends ChangeNotifier {
     _init();
   }
   void _init() async {
-    await _player.setAsset('assets/dior.mp3');
+    await _player.setUrl('');
     _player.positionStream.listen(
       (event) {
         current = event;

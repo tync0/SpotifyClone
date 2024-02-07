@@ -25,7 +25,7 @@ class TokenInterceptor extends Interceptor {
     debugPrint("Request: $options");
     token = await _storage.read(key: 'token');
     if (token != null) {
-      options.headers['Authorization'] = 'Bearer $token';
+      options.headers['Authorization'] = 'Token $token';
     }
     return handler.next(options);
   }

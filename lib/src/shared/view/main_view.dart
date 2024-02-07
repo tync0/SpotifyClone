@@ -48,7 +48,7 @@ class _MainViewState extends State<MainView> {
               padding: const EdgeInsets.only(
                 left: 48,
                 right: 48,
-                top: 20,
+                top: 15,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
