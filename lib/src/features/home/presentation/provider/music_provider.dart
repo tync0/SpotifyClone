@@ -6,11 +6,11 @@ class MusicManager extends ChangeNotifier {
   bool playing = false;
   Duration? total = Duration.zero;
   Duration? current = Duration.zero;
-  MusicManager() {
-    _init();
-  }
-  void _init() async {
-    await _player.setUrl('');
+  MusicManager();
+
+  Future<void> init(String music) async {
+    print("in playing audio $music");
+    await _player.setUrl(music);
     _player.positionStream.listen(
       (event) {
         current = event;

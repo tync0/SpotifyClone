@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:spotify/src/features/home/domain/entity/music_entity.dart';
+import 'package:spotify/src/features/home/presentation/bloc/music_bloc/music_bloc.dart';
 import 'package:spotify/src/features/home/presentation/provider/music_provider.dart';
 import 'package:spotify/src/features/home/presentation/widget/music_image.dart';
 import 'package:spotify/src/features/home/presentation/widget/music_title.dart';
@@ -11,13 +14,24 @@ import '../widget/music_footer_icon.dart';
 
 @RoutePage()
 class MusicView extends StatefulWidget {
-  const MusicView({super.key});
+  final int id;
+  const MusicView({
+    super.key,
+    required this.id,
+  });
 
   @override
   State<MusicView> createState() => _MusicViewState();
 }
 
 class _MusicViewState extends State<MusicView> {
+  late final MusicEntity music;
+  @override
+  void initState() {
+    music = BlocProvider.of<MusicBloc>(context).state.musics![widget.id];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,13 +63,17 @@ class _MusicViewState extends State<MusicView> {
                 children: [
                   const MusicAppBar(),
                   const SizedBox(height: 57),
-                  const MusicViewImage(),
+                  MusicViewImage(
+                    imageUrl: music.musicImage!,
+                  ),
                   const SizedBox(height: 57),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Column(
                       children: [
-                        const MusicViewTitle(),
+                        MusicViewTitle(
+                          musicName: music.musicName!,
+                        ),
                         const SizedBox(height: 10),
                         Consumer<MusicManager>(
                           builder: (context, value, child) {

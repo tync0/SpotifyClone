@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotify/src/features/home/presentation/bloc/playlist_bloc/playlist_bloc.dart';
 import 'package:spotify/src/features/home/presentation/widget/home_tags.dart';
 import 'package:spotify/src/features/home/presentation/widget/listened_mix.dart';
 import 'package:spotify/src/features/home/presentation/widget/shows_mix.dart';
@@ -16,6 +18,11 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,19 +71,31 @@ class _HomeViewState extends State<HomeView> {
                 style: ConstantTextStyle.largeTextStyle,
               ),
               const SizedBox(height: 15),
-              SizedBox(
-                height: context.dynamicHeight(0.25),
-                child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: 6,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return const ShowsMix();
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(width: 10);
-                  },
-                ),
+              BlocBuilder<PlaylistBloc, PlaylistState>(
+                builder: (context, state) {
+                  if (state is PlaylistInitial) {
+                    return CircularProgressIndicator();
+                  } else if (state is PlaylistLoading) {
+                    return CircularProgressIndicator();
+                  } else if (state is PlaylistSuccess) {
+                    return SizedBox(
+                      height: context.dynamicHeight(0.25),
+                      child: ListView.separated(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: state.playlists?.length ?? 0,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return ShowsMix(state.playlists![index]);
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(width: 10);
+                        },
+                      ),
+                    );
+                  } else {
+                    return Text('error');
+                  }
+                },
               ),
             ],
           ),

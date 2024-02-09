@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:spotify/src/features/home/presentation/view/home_view.dart';
 import 'package:spotify/src/features/library/presentation/view/library_view.dart';
 import 'package:spotify/src/features/search/presentation/view/search_view.dart';
 import 'package:spotify/src/shared/view/main_view.dart';
 
+import '../../features/home/domain/entity/music_entity.dart';
 import '../../features/home/presentation/view/music_view.dart';
 import '../../features/home/presentation/view/playlist_view.dart';
 import '../../shared/view/splash_view.dart';

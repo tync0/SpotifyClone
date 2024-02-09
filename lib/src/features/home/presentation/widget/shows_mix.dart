@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:spotify/src/config/router/app_router.dart';
+import 'package:spotify/src/features/home/domain/entity/playlist_entity.dart';
 import 'package:spotify/src/utils/contants/text_style.dart';
 import 'package:spotify/src/utils/extension/mediaquery_extension.dart';
 
 class ShowsMix extends StatelessWidget {
-  const ShowsMix({super.key});
+  final PlaylistEntity _playlistEntity;
+  const ShowsMix(this._playlistEntity, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +19,25 @@ class ShowsMix extends StatelessWidget {
         children: [
           InkWell(
             onTap: () async {
-              context.router.pushNamed('/playlist');
+              context.router.push(
+                PlayListRoute(
+                  id: _playlistEntity.id!,
+                ),
+              );
             },
-            child: Container(
+            child: SizedBox(
               width: context.dynamicWidth(0.4),
               height: context.dynamicHeight(0.19),
-              color: Colors.blueGrey,
+              child: Image.network(
+                _playlistEntity.playlistImage!,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
           const SizedBox(height: 10),
           Expanded(
             child: Text(
-              'Şehinşah, Ati242, Patron and more',
+              _playlistEntity.playlistName ?? "",
               style: ConstantTextStyle.smallTextStyle!.copyWith(
                 color: Colors.grey[500],
               ),

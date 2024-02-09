@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:spotify/injection_container.dart';
+import 'package:spotify/src/features/home/presentation/bloc/playlist_bloc/playlist_bloc.dart';
 import 'package:spotify/src/utils/contants/colors.dart';
 import 'package:spotify/src/utils/extension/mediaquery_extension.dart';
 
@@ -15,6 +17,7 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
+    //s1<PlaylistBloc>().add(GetPlaylistEvent());
     changeScreen(context);
     super.initState();
   }

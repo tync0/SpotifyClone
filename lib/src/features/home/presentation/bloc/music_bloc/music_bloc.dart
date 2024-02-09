@@ -11,7 +11,7 @@ part 'music_state.dart';
 class MusicBloc extends Bloc<MusicEvent, MusicState> {
   final GetMusicUseCaseImpl _getMusicUseCaseImpl;
   MusicBloc(this._getMusicUseCaseImpl) : super(MusicInitial()) {
-    on<MusicEvent>(
+    on<GetMusicEvent>(
       (event, emit) async {
         emit(MusicLoading());
         try {

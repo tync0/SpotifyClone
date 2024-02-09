@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:spotify/src/features/home/data/datasource/main_service.dart';
-import 'package:spotify/src/features/home/domain/repository/playlist_repository.dart';
+import 'package:spotify/src/features/home/domain/repository/main_repository.dart';
 import 'package:spotify/src/features/home/domain/usecase/get_music_usecase.dart';
 import 'package:spotify/src/features/home/domain/usecase/get_playlist_usecase.dart';
 import 'package:spotify/src/features/home/presentation/bloc/music_bloc/music_bloc.dart';
 import 'package:spotify/src/features/home/presentation/bloc/playlist_bloc/playlist_bloc.dart';
 
 import 'src/core/interceptor/token_interceptor.dart';
-import 'src/features/home/data/repository/playlist_repository_impl.dart';
+import 'src/features/home/data/repository/main_repository_impl.dart';
 
 GetIt s1 = GetIt.instance;
 

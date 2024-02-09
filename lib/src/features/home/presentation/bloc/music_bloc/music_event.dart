@@ -1,9 +1,10 @@
 part of 'music_bloc.dart';
 
-sealed class MusicEvent extends Equatable {
-  final int id;
-  const MusicEvent(this.id);
+abstract class MusicEvent extends Equatable {}
 
+class GetMusicEvent extends MusicEvent {
+  final int id;
+  GetMusicEvent(this.id);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [id];
 }

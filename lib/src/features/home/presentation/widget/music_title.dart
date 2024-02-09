@@ -7,7 +7,11 @@ import 'package:spotify/src/utils/extension/mediaquery_extension.dart';
 import '../../../../shared/widget/svg_picture.dart';
 
 class MusicViewTitle extends StatelessWidget {
-  const MusicViewTitle({super.key});
+  final String musicName;
+  const MusicViewTitle({
+    super.key,
+    required this.musicName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +26,12 @@ class MusicViewTitle extends StatelessWidget {
             children: [
               const SizedBox(height: 10),
               Text(
-                'Dior',
+                musicName,
                 style: ConstantTextStyle.largeTextStyle!.copyWith(fontSize: 22),
               ),
               const SizedBox(height: 5),
               Text(
-                'Pop Smoke',
+                'Skryptonite',
                 style: ConstantTextStyle.smallTextStyle!.copyWith(
                   color: Colors.grey[300],
                 ),

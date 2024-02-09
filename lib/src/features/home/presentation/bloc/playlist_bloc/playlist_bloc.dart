@@ -14,7 +14,7 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
   PlaylistBloc(this._getPlaylistUsecaseImpl) : super(PlaylistInitial()) {
     on<GetPlaylistEvent>(
       (event, emit) async {
-        PlaylistLoading();
+        emit(PlaylistLoading());
         try {
           final dataState = await _getPlaylistUsecaseImpl.call();
           if (dataState is DataSuccess) {

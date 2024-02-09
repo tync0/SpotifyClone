@@ -3,7 +3,7 @@ import 'package:spotify/src/core/resource/data_state.dart';
 import 'package:spotify/src/features/home/data/model/music_model.dart';
 import 'package:spotify/src/features/home/data/model/playlist_model.dart';
 
-import '../../domain/repository/playlist_repository.dart';
+import '../../domain/repository/main_repository.dart';
 import '../datasource/main_service.dart';
 
 class MainRepositoryImpl implements MainRepository {
@@ -40,7 +40,7 @@ class MainRepositoryImpl implements MainRepository {
       final httpResponse = await _mainService.getPlaylist();
       if (httpResponse.response.statusCode == 200) {
         List<PlaylistModel> musics = List<PlaylistModel>.from(
-          httpResponse.response.data['songs'].map(
+          httpResponse.response.data.map(
             (e) => PlaylistModel.fromJson(e),
           ),
         );

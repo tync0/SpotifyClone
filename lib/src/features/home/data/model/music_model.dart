@@ -4,13 +4,15 @@ class MusicModel extends MusicEntity {
   MusicModel({
     super.musicImage,
     super.musicName,
-    super.singer,
+    super.musicUrl,
+    //super.singer,
   });
   factory MusicModel.fromJson(Map<String, dynamic> json) {
     return MusicModel(
       musicImage: json['image'],
       musicName: json['title'],
-      singer: json['singer'],
+      musicUrl: json['audio'],
+      //singer: json['singer'],
     );
   }
 }

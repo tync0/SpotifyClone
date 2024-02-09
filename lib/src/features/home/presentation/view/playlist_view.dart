@@ -1,19 +1,34 @@
 import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotify/src/features/home/domain/entity/music_entity.dart';
+import 'package:spotify/src/features/home/presentation/bloc/music_bloc/music_bloc.dart';
 import 'package:spotify/src/features/home/presentation/widget/playlist_icon_set.dart';
 import 'package:spotify/src/features/home/presentation/widget/playlist_music.dart';
 import 'package:spotify/src/utils/extension/mediaquery_extension.dart';
 
 @RoutePage()
 class PlayListView extends StatefulWidget {
-  const PlayListView({super.key});
+  final int id;
+  const PlayListView({
+    super.key,
+    required this.id,
+  });
 
   @override
   State<PlayListView> createState() => _PlayListViewState();
 }
 
 class _PlayListViewState extends State<PlayListView> {
+  @override
+  void initState() {
+    BlocProvider.of<MusicBloc>(context).add(
+      GetMusicEvent(widget.id),
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,15 +65,23 @@ class _PlayListViewState extends State<PlayListView> {
                 ),
               ),
             ),
-            SliverList.separated(
-              itemBuilder: (context, index) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18),
-                  child: PlayListMusic(),
+            BlocBuilder<MusicBloc, MusicState>(
+              builder: (context, state) {
+                print("state: $state");
+                return SliverList.separated(
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: PlayListMusic(
+                        id: index,
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 10),
+                  itemCount: state.musics?.length ?? 0,
                 );
               },
-              separatorBuilder: (context, index) => const SizedBox(height: 10),
-              itemCount: 6,
             )
           ],
         ),

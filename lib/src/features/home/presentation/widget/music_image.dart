@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:spotify/src/utils/extension/mediaquery_extension.dart';
 
 class MusicViewImage extends StatelessWidget {
-  const MusicViewImage({super.key});
+  final String imageUrl;
+  const MusicViewImage({
+    super.key,
+    required this.imageUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +17,8 @@ class MusicViewImage extends StatelessWidget {
         color: Colors.blueGrey,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Image.asset(
-        'assets/pop-smoke.jpeg',
+      child: Image.network(
+        imageUrl,
         fit: BoxFit.fill,
       ),
     );

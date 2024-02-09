@@ -34,15 +34,23 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     MusicRoute.name: (routeData) {
+      final args = routeData.argsAs<MusicRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const MusicView(),
+        child: MusicView(
+          key: args.key,
+          id: args.id,
+        ),
       );
     },
     PlayListRoute.name: (routeData) {
+      final args = routeData.argsAs<PlayListRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const PlayListView(),
+        child: PlayListView(
+          key: args.key,
+          id: args.id,
+        ),
       );
     },
     SearchRoute.name: (routeData) {
@@ -104,30 +112,77 @@ class MainRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [MusicView]
-class MusicRoute extends PageRouteInfo<void> {
-  const MusicRoute({List<PageRouteInfo>? children})
-      : super(
+class MusicRoute extends PageRouteInfo<MusicRouteArgs> {
+  MusicRoute({
+    Key? key,
+    required int id,
+    List<PageRouteInfo>? children,
+  }) : super(
           MusicRoute.name,
+          args: MusicRouteArgs(
+            key: key,
+            id: id,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'MusicRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<MusicRouteArgs> page = PageInfo<MusicRouteArgs>(name);
+}
+
+class MusicRouteArgs {
+  const MusicRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'MusicRouteArgs{key: $key, id: $id}';
+  }
 }
 
 /// generated route for
 /// [PlayListView]
-class PlayListRoute extends PageRouteInfo<void> {
-  const PlayListRoute({List<PageRouteInfo>? children})
-      : super(
+class PlayListRoute extends PageRouteInfo<PlayListRouteArgs> {
+  PlayListRoute({
+    Key? key,
+    required int id,
+    List<PageRouteInfo>? children,
+  }) : super(
           PlayListRoute.name,
+          args: PlayListRouteArgs(
+            key: key,
+            id: id,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'PlayListRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<PlayListRouteArgs> page =
+      PageInfo<PlayListRouteArgs>(name);
+}
+
+class PlayListRouteArgs {
+  const PlayListRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'PlayListRouteArgs{key: $key, id: $id}';
+  }
 }
 
 /// generated route for

@@ -44,6 +44,7 @@ class _MainService implements MainService {
               baseUrl,
             ))));
     final value = _result.data;
+    print("value $value");
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
