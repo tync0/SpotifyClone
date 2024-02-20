@@ -22,6 +22,7 @@ class ShowsMix extends StatelessWidget {
               context.router.push(
                 PlayListRoute(
                   id: _playlistEntity.id!,
+                  imageUrl: _playlistEntity.playlistImage!,
                 ),
               );
             },

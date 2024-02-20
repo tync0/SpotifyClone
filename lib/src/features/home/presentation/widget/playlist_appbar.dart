@@ -1,8 +1,12 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:spotify/src/utils/contants/colors.dart';
 
 class PlayListAppBar extends StatefulWidget {
-  const PlayListAppBar({super.key});
+  final String imageUrl;
+  const PlayListAppBar({
+    super.key,
+    required this.imageUrl,
+  });
 
   @override
   State<PlayListAppBar> createState() => _PlayListAppBarState();
@@ -12,36 +16,54 @@ class _PlayListAppBarState extends State<PlayListAppBar> {
   bool tapped = false;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GestureDetector(
-          onTap: () => context.router.pop(),
-          onTapDown: (details) {
-            setState(() {
-              tapped = true;
-            });
-          },
-          onTapUp: (_) {
-            // When the button is released
-            setState(() {
-              tapped = false;
-            });
-          },
-          onTapCancel: () {
-            // When the user's tap is canceled (e.g., user swipes away)
-            setState(() {
-              tapped = false;
-            });
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: tapped ? Colors.grey : Colors.white,
-            size: 30,
-          ),
-        ),
-        const SizedBox(width: 34),
-      ],
+    return SliverAppBar(
+      expandedHeight: 240,
+      backgroundColor: AppColor.scaffoldColor,
+      flexibleSpace: LayoutBuilder(
+        builder: (context, constraints) {
+          double percent = ((constraints.maxHeight - kToolbarHeight) /
+                  (200.0 - kToolbarHeight))
+              .clamp(0.0, 1.0);
+          return DecoratedBox(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.red, Colors.black],
+                stops: [0.7, 1],
+              ),
+            ),
+            child: Stack(
+              children: [
+                Center(
+                  child: SizedBox(
+                    height: 100 + (100 * percent),
+                    width: 100 + (100 * percent),
+                    child: Opacity(
+                      opacity: percent,
+                      child: Image.network(
+                        widget.imageUrl,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                if (percent == 0)
+                  Center(
+                    child: Text(
+                      'Album Name',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0 + (10 * percent),
+                      ),
+                    ),
+                  )
+              ],
+            ),
+          );
+        },
+      ),
+      pinned: true,
     );
   }
 }

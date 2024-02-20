@@ -1,19 +1,22 @@
-import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spotify/src/features/home/domain/entity/music_entity.dart';
 import 'package:spotify/src/features/home/presentation/bloc/music_bloc/music_bloc.dart';
 import 'package:spotify/src/features/home/presentation/widget/playlist_icon_set.dart';
 import 'package:spotify/src/features/home/presentation/widget/playlist_music.dart';
+
 import 'package:spotify/src/utils/extension/mediaquery_extension.dart';
+
+import '../widget/playlist_appbar.dart';
 
 @RoutePage()
 class PlayListView extends StatefulWidget {
   final int id;
+  final String imageUrl;
   const PlayListView({
     super.key,
     required this.id,
+    required this.imageUrl,
   });
 
   @override
@@ -34,18 +37,12 @@ class _PlayListViewState extends State<PlayListView> {
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
           slivers: [
             const SliverToBoxAdapter(
-              child: SizedBox(height: 30),
+              child: SizedBox(height: 5),
             ),
-            SliverPersistentHeader(
-              delegate: ResizableImageHeaderDelegate(
-                context: context,
-                maxHeight: context.dynamicHeight(0.27), // Maximum height
-              ),
-              pinned: false,
-              floating: true,
-            ),
+            PlayListAppBar(imageUrl: widget.imageUrl),
             SliverToBoxAdapter(
               child: Padding(
                 padding:
@@ -67,7 +64,6 @@ class _PlayListViewState extends State<PlayListView> {
             ),
             BlocBuilder<MusicBloc, MusicState>(
               builder: (context, state) {
-                print("state: $state");
                 return SliverList.separated(
                   itemBuilder: (context, index) {
                     return Padding(
@@ -82,53 +78,15 @@ class _PlayListViewState extends State<PlayListView> {
                   itemCount: state.musics?.length ?? 0,
                 );
               },
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: context.mediaQueryHeight,
+              ),
             )
           ],
         ),
       ),
     );
-  }
-}
-
-class ResizableImageHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final double maxHeight;
-  final BuildContext context;
-
-  ResizableImageHeaderDelegate({
-    required this.maxHeight,
-    required this.context,
-  });
-
-  @override
-  double get minExtent => 0;
-
-  @override
-  double get maxExtent => maxHeight;
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    // Calculate the size reduction based on the scroll offset
-    double currentExtent = max(maxExtent - shrinkOffset, minExtent);
-    double screenWidth = MediaQuery.of(context).size.width;
-    double currentWidth = (currentExtent / maxExtent) * screenWidth;
-    double currentHeight = (currentExtent / maxExtent) * maxHeight;
-
-    return SizedBox(
-      height: currentHeight,
-      width: currentWidth,
-      child: Center(
-        child: Container(
-          color: Colors.blueGrey,
-          width: currentWidth,
-          height: currentHeight,
-        ),
-      ),
-    );
-  }
-
-  @override
-  bool shouldRebuild(covariant ResizableImageHeaderDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight || context != oldDelegate.context;
   }
 }
