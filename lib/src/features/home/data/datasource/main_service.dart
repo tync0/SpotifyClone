@@ -10,10 +10,10 @@ abstract class MainService {
     dio.options = BaseOptions(contentType: 'application/json');
     return _MainService(dio);
   }
-  @GET(ServiceConst.playlistEndPoint)
+  @GET(ServiceConst.getPlaylistsEndPoint)
   Future<HttpResponse> getPlaylist();
 
-  @GET("${ServiceConst.playlistEndPoint}/{id}/")
+  @GET("${ServiceConst.getPlaylistById}/{id}")
   Future<HttpResponse> getMusics(
     @Path("id") int id,
   );

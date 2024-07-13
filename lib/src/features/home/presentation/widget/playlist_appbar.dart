@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:spotify/src/utils/contants/colors.dart';
 
 class PlayListAppBar extends StatefulWidget {
-  final String imageUrl;
+  final String imageUrl, playlistName;
   const PlayListAppBar({
     super.key,
     required this.imageUrl,
+    required this.playlistName,
   });
 
   @override
@@ -25,14 +26,7 @@ class _PlayListAppBarState extends State<PlayListAppBar> {
                   (200.0 - kToolbarHeight))
               .clamp(0.0, 1.0);
           return DecoratedBox(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.red, Colors.black],
-                stops: [0.7, 1],
-              ),
-            ),
+            decoration: const BoxDecoration(),
             child: Stack(
               children: [
                 Center(
@@ -51,7 +45,7 @@ class _PlayListAppBarState extends State<PlayListAppBar> {
                 if (percent == 0)
                   Center(
                     child: Text(
-                      'Album Name',
+                      widget.playlistName,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.0 + (10 * percent),

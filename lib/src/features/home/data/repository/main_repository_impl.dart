@@ -15,7 +15,7 @@ class MainRepositoryImpl implements MainRepository {
       final httpResponse = await _mainService.getMusics(id);
       if (httpResponse.response.statusCode == 200) {
         List<MusicModel> musics = List<MusicModel>.from(
-          httpResponse.response.data['songs'].map(
+          httpResponse.response.data['Musics'].map(
             (e) => MusicModel.fromJson(e),
           ),
         );

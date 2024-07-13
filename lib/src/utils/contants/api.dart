@@ -4,8 +4,9 @@ class ServiceConst {
     return _instance;
   }
   ServiceConst._createInstance();
-  static const String baseUrl = 'https://spotifyapi-xb00.onrender.com/';
-  static const String loginEndPoint = 'api-token-auth/';
-  static const String registerEndPoint = 'api/v1/users/';
-  static const String playlistEndPoint = 'api/v1/playlists/';
+  static const String baseUrl = 'http://172.20.88.71:8080';
+  static const String loginEndPoint = '/login';
+  static const String registerEndPoint = '/register';
+  static const String getPlaylistsEndPoint = '/playlists';
+  static const String getPlaylistById = '/playlist';
 }

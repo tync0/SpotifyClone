@@ -8,9 +8,9 @@ class PlaylistModel extends PlaylistEntity {
   });
   factory PlaylistModel.fromJson(Map<String, dynamic> json) {
     return PlaylistModel(
-      id: json['id'],
+      id: json['ID'],
       playlistImage: json['image'],
-      playlistName: json['title'],
+      playlistName: json['name'],
     );
   }
 }

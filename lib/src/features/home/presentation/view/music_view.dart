@@ -35,19 +35,7 @@ class _MusicViewState extends State<MusicView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: const [0.2, 0.4, 0.7, 1],
-          colors: [
-            Colors.blueGrey.shade700,
-            Colors.blueGrey.shade800,
-            Colors.blueGrey.shade900,
-            Colors.black12,
-          ],
-        ),
-      ),
+      decoration: const BoxDecoration(color: Colors.black12),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(

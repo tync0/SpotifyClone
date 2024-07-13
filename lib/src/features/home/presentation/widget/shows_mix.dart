@@ -23,6 +23,7 @@ class ShowsMix extends StatelessWidget {
                 PlayListRoute(
                   id: _playlistEntity.id!,
                   imageUrl: _playlistEntity.playlistImage!,
+                  playlistName: _playlistEntity.playlistName!,
                 ),
               );
             },

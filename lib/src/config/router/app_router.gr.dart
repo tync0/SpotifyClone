@@ -51,6 +51,7 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           id: args.id,
           imageUrl: args.imageUrl,
+          playlistName: args.playlistName,
         ),
       );
     },
@@ -155,6 +156,7 @@ class PlayListRoute extends PageRouteInfo<PlayListRouteArgs> {
     Key? key,
     required int id,
     required String imageUrl,
+    required String playlistName,
     List<PageRouteInfo>? children,
   }) : super(
           PlayListRoute.name,
@@ -162,6 +164,7 @@ class PlayListRoute extends PageRouteInfo<PlayListRouteArgs> {
             key: key,
             id: id,
             imageUrl: imageUrl,
+            playlistName: playlistName,
           ),
           initialChildren: children,
         );
@@ -177,6 +180,7 @@ class PlayListRouteArgs {
     this.key,
     required this.id,
     required this.imageUrl,
+    required this.playlistName,
   });
 
   final Key? key;
@@ -185,9 +189,11 @@ class PlayListRouteArgs {
 
   final String imageUrl;
 
+  final String playlistName;
+
   @override
   String toString() {
-    return 'PlayListRouteArgs{key: $key, id: $id, imageUrl: $imageUrl}';
+    return 'PlayListRouteArgs{key: $key, id: $id, imageUrl: $imageUrl, playlistName: $playlistName}';
   }
 }
 

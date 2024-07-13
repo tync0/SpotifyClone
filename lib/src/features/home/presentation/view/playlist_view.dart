@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify/src/features/home/presentation/bloc/music_bloc/music_bloc.dart';
 import 'package:spotify/src/features/home/presentation/widget/playlist_icon_set.dart';
 import 'package:spotify/src/features/home/presentation/widget/playlist_music.dart';
+import 'package:spotify/src/utils/contants/text_style.dart';
 
 import 'package:spotify/src/utils/extension/mediaquery_extension.dart';
 
@@ -12,11 +13,12 @@ import '../widget/playlist_appbar.dart';
 @RoutePage()
 class PlayListView extends StatefulWidget {
   final int id;
-  final String imageUrl;
+  final String imageUrl, playlistName;
   const PlayListView({
     super.key,
     required this.id,
     required this.imageUrl,
+    required this.playlistName,
   });
 
   @override
@@ -42,18 +44,28 @@ class _PlayListViewState extends State<PlayListView> {
             const SliverToBoxAdapter(
               child: SizedBox(height: 5),
             ),
-            PlayListAppBar(imageUrl: widget.imageUrl),
+            PlayListAppBar(
+              imageUrl: widget.imageUrl,
+              playlistName: widget.playlistName,
+            ),
             SliverToBoxAdapter(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 18, vertical: 22),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 22,
+                ),
                 child: Column(
                   children: [
                     const SizedBox(height: 15),
-                    Container(
-                      color: Colors.blueGrey,
+                    SizedBox(
                       width: context.mediaQueryWidth,
-                      height: context.dynamicHeight(0.09),
+                      height: context.dynamicHeight(0.06),
+                      child: Text(
+                        widget.playlistName,
+                        style: ConstantTextStyle.largeTextStyle!.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 15),
                     const PlayListIconSet(),

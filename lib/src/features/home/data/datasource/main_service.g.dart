@@ -13,7 +13,7 @@ class _MainService implements MainService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://spotifyapi-xb00.onrender.com/';
+    baseUrl ??= 'http://172.20.88.71:8080';
   }
 
   final Dio _dio;
@@ -34,7 +34,7 @@ class _MainService implements MainService {
     )
             .compose(
               _dio.options,
-              'api/v1/playlists/',
+              '/playlists',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -62,7 +62,7 @@ class _MainService implements MainService {
     )
             .compose(
               _dio.options,
-              'api/v1/playlists//${id}/',
+              '/playlist/${id}',
               queryParameters: queryParameters,
               data: _data,
             )

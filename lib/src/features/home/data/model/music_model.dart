@@ -1,3 +1,5 @@
+import 'package:spotify/src/utils/contants/api.dart';
+
 import '../../domain/entity/music_entity.dart';
 
 class MusicModel extends MusicEntity {
@@ -5,14 +7,14 @@ class MusicModel extends MusicEntity {
     super.musicImage,
     super.musicName,
     super.musicUrl,
-    //super.singer,
+    super.artistName,
   });
   factory MusicModel.fromJson(Map<String, dynamic> json) {
     return MusicModel(
       musicImage: json['image'],
-      musicName: json['title'],
-      musicUrl: json['audio'],
-      //singer: json['singer'],
+      musicName: json['name'],
+      musicUrl: "${ServiceConst.baseUrl}/${json['file']}",
+      artistName: json['artist'],
     );
   }
 }

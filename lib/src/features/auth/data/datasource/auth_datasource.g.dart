@@ -13,7 +13,7 @@ class _AuthDatasource implements AuthDatasource {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://spotifyapi-xb00.onrender.com/';
+    baseUrl ??= 'http://172.20.88.71:8080';
   }
 
   final Dio _dio;
@@ -35,7 +35,7 @@ class _AuthDatasource implements AuthDatasource {
     )
             .compose(
               _dio.options,
-              'api-token-auth/',
+              '/login',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -65,7 +65,7 @@ class _AuthDatasource implements AuthDatasource {
     )
             .compose(
               _dio.options,
-              'api/v1/users/',
+              '/register',
               queryParameters: queryParameters,
               data: _data,
             )
